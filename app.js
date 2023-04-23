@@ -16,6 +16,7 @@ var completedTasksHolder = document.getElementById('completed-tasks') //complete
 var createNewTaskElement = function (taskString) {
     var listItem = document.createElement('li')
     listItem.classList.add('todo__task')
+    listItem.classList.add('todo__task_incomplete')
     //input (checkbox)
     var checkBox = document.createElement('input') //checkbx
     //label
@@ -30,7 +31,7 @@ var createNewTaskElement = function (taskString) {
     var deleteButtonImg = document.createElement('img') //delete button image
 
     label.innerText = taskString
-    label.className = 'task'
+    label.className = 'todo__label'
 
     //Each elements, needs appending
     checkBox.type = 'checkbox'
@@ -78,7 +79,7 @@ var editTask = function () {
     var editInput = listItem.querySelector('input[type=text]')
     var label = listItem.querySelector('label')
     var editBtn = listItem.querySelector('.edit')
-    var containsClass = listItem.classList.contains('editMode')
+    var containsClass = listItem.classList.contains('todo__task_editMode')
     //If class of the parent is .editmode
     if (containsClass) {
         //switch to .editmode
@@ -91,7 +92,7 @@ var editTask = function () {
     }
 
     //toggle .editmode on the parent.
-    listItem.classList.toggle('editMode')
+    listItem.classList.toggle('todo__task_editMode')
 }
 
 //Delete task.
@@ -110,6 +111,7 @@ var taskCompleted = function () {
 
     //Append the task list item to the #completed-tasks
     var listItem = this.parentNode
+    listItem.classList.replace('todo__task_incomplete', 'todo__task_complete')
     completedTasksHolder.appendChild(listItem)
     bindTaskEvents(listItem, taskIncomplete)
 }
@@ -120,6 +122,7 @@ var taskIncomplete = function () {
     //When the checkbox is unchecked
     //Append the task list item to the #incompleteTasks.
     var listItem = this.parentNode
+    listItem.classList.replace('todo__task_complete', 'todo__task_incomplete')
     incompleteTaskHolder.appendChild(listItem)
     bindTaskEvents(listItem, taskCompleted)
 }
